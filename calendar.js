@@ -1,5 +1,7 @@
 
-
+/*To do : if user clicks outside of calendar it exits outside
+use the e
+*/
 var Calendar = function(model, options, date){
   // Default Values
   this.Options = {
@@ -299,11 +301,6 @@ function caleandar(el, data, settings){
 
 
 
-
-
-
-
-
 var events = [
   {'Date': new Date(2016, 6, 7), 'Title': 'Doctor appointment at 3:25pm.'},
   {'Date': new Date(2016, 6, 18), 'Title': 'New Garfield movie comes out!', 'Link': 'https://garfield.com'},
@@ -312,3 +309,82 @@ var events = [
 var settings = {};
 var element = document.getElementById('caleandar');
 caleandar(element, events, settings);
+
+
+//document.querySelector(".cld-day").setAttribute("onclick","mysFunction()")
+(function() {
+
+var titles = document.querySelectorAll(".cld-day");
+var i = titles.length;
+while (i--) {
+    titles[i].setAttribute("onclick", "mysFunction()");
+}
+
+})();
+
+
+var indexVal = 0;
+var indexWhereClicked = document.querySelector('.cld-days');
+
+/*
+The purpose of this immediately invoked function is to return the index of the spot on the calendar was indexWhereClicked
+each day is an index in the dom
+*/
+for (var i = 0, len = indexWhereClicked.children.length; i < len; i++)
+{
+
+    (function(index){
+        indexWhereClicked.children[i].onclick = function(){
+            //  alert(index)  ;
+              indexVal = index;
+              console.log(indexVal);// checking to see if it is in fact returning index and it does !!!
+
+              mysFunction(indexVal);
+        }
+    })(i);
+}
+
+
+
+
+var txt;
+var previous;
+var already=false;
+var addressP;
+var p=0;
+/*
+
+/mysFunction handles putting events into the Calendar
+person holds the string that the user puts in
+after the prompt the if that cell hasn't been set it
+will do thee last statement if it has
+it will do already == true statement where it will take that Element
+remove all of the characters that arent integers and append the new text
+
+slight bug if you change months and click a cell it doesnt work :/
+*/
+
+function mysFunction(indexVal) {
+  //console.log(document.querySelector(".cld-number").innerHTML)
+
+    var person = prompt("Please enter event:", "User Id");
+    if (person == null || person == "") {
+
+    } else if(already==true){
+      txt = " ";
+      addressP = document.querySelectorAll(".cld-number")[indexVal].innerHTML
+      addressP = addressP.replace(/\D/g,'') + "  ";
+    txt = person
+console.log(addressP)
+            addressP += txt;
+            document.querySelectorAll("li p")[indexVal].innerHTML =addressP;
+    }
+    else {
+        txt = "  " + person ;
+        p++;
+      document.querySelectorAll("li p")[indexVal].innerHTML += txt;
+      already = true;
+    }
+          previous = txt;
+
+}
