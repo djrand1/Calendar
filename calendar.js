@@ -2,7 +2,10 @@
 /*To do : if user clicks outside of calendar it exits outside
 use the e
 */
+
+
 var Calendar = function(model, options, date){
+
   // Default Values
   this.Options = {
     Color: '',
@@ -18,6 +21,16 @@ var Calendar = function(model, options, date){
     DisabledDays: [],
     ModelChange: model
   };
+  (function() {
+
+  var titles = document.querySelectorAll(".cld-day");
+  var i = titles.length;
+  while (i--) {
+      titles[i].onclick = mysFunction
+  }
+
+  })();
+
   // Overwriting default values
   for(var key in options){
     this.Options[key] = typeof options[key]=='string'?options[key].toLowerCase():options[key];
@@ -43,6 +56,7 @@ var Calendar = function(model, options, date){
 };
 
 function createCalendar(calendar, element, adjuster){
+
   if(typeof adjuster !== 'undefined'){
     var newDate = new Date(calendar.Selected.Year, calendar.Selected.Month + adjuster, 1);
     calendar = new Calendar(calendar.Model, calendar.Options, newDate);
@@ -130,6 +144,7 @@ function createCalendar(calendar, element, adjuster){
         var rwd = document.createElement('div');
         rwd.className += " cld-rwd cld-nav";
         rwd.addEventListener('click', function(){createCalendar(calendar, element, -1);} );
+
         rwd.innerHTML = '<svg height="15" width="15" viewBox="0 0 75 100" fill="rgba(0,0,0,0.5)"><polyline points="0,50 75,0 75,100"></polyline></svg>';
         datetime.appendChild(rwd);
       }
@@ -164,6 +179,7 @@ function createCalendar(calendar, element, adjuster){
     mainSection.appendChild(labels);
   }
   function AddDays(){
+
     // Create Number Element
     function DayNumber(n){
       var number = document.createElement('p');
@@ -173,6 +189,7 @@ function createCalendar(calendar, element, adjuster){
     }
     var days = document.createElement('ul');
     days.className += "cld-days";
+
     // Previous Month's Days
     for(var i = 0; i < (calendar.Selected.FirstDay); i++){
       var day = document.createElement('li');
@@ -194,6 +211,7 @@ function createCalendar(calendar, element, adjuster){
     for(var i = 0; i < calendar.Selected.Days; i++){
       var day = document.createElement('li');
       day.className += "cld-day currMonth";
+      day.setAttribute("onclick","mysFunction()")
       //Disabled Days
       var d = (i + calendar.Selected.FirstDay)%7;
       for(var q = 0; q < calendar.Options.DisabledDays.length; q++){
@@ -201,9 +219,11 @@ function createCalendar(calendar, element, adjuster){
           day.className += " disableDay";
         }
       }
+
       var number = DayNumber(i+1);
       // Check Date against Event Dates
       for(var n = 0; n < calendar.Model.length; n++){
+
         var evDate = calendar.Model[n].Date;
         var toDate = new Date(calendar.Selected.Year, calendar.Selected.Month, (i+1));
         if(evDate.getTime() == toDate.getTime()){
@@ -230,6 +250,7 @@ function createCalendar(calendar, element, adjuster){
                 }
               }
             }else{
+
               a.addEventListener('click', calendar.Model[n].Link);
               if(calendar.Options.EventTargetWholeDay){
                 day.className += " clickable";
@@ -295,6 +316,7 @@ function createCalendar(calendar, element, adjuster){
 function caleandar(el, data, settings){
   var obj = new Calendar(data, settings);
   createCalendar(obj, el);
+
 }
 
 
@@ -312,6 +334,7 @@ caleandar(element, events, settings);
 
 
 //document.querySelector(".cld-day").setAttribute("onclick","mysFunction()")
+/*
 (function() {
 
 var titles = document.querySelectorAll(".cld-day");
@@ -321,6 +344,7 @@ while (i--) {
 }
 
 })();
+*/
 
 
 var indexVal = 0;

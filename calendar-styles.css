@@ -1,5 +1,6 @@
 .cld-main{
-  width: 660px;
+  width: 960px;
+  height: 450px;
 }
 .cld-main a{
   color: #7B00FF;
@@ -18,7 +19,7 @@ position: relative;
 #popo {
   position: absolute;
   bottom:32;
-  left:337px;
+  left:217px;
 font-weight:900;
   background-color:grey  ;
 
@@ -141,5 +142,3 @@ This is for positioning the calendar invocation
       }
       .today .cld-number.eventday:hover{
 }
-
- 
