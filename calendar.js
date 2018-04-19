@@ -1,3 +1,10 @@
+var txt;
+var previous;
+var already=false;
+var addressP;
+var p=0;
+var indexVal = 10;
+var dothings;
 
 /*To do : if user clicks outside of calendar it exits outside
 use the e
@@ -21,6 +28,7 @@ var Calendar = function(model, options, date){
     DisabledDays: [],
     ModelChange: model
   };
+  /*
   (function() {
 
   var titles = document.querySelectorAll(".cld-day");
@@ -30,7 +38,7 @@ var Calendar = function(model, options, date){
   }
 
   })();
-
+*/
   // Overwriting default values
   for(var key in options){
     this.Options[key] = typeof options[key]=='string'?options[key].toLowerCase():options[key];
@@ -167,6 +175,7 @@ function createCalendar(calendar, element, adjuster){
   }
 
   function AddLabels(){
+
     var labels = document.createElement('ul');
     labels.className = 'cld-labels';
     var labelsList = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -178,6 +187,33 @@ function createCalendar(calendar, element, adjuster){
     }
     mainSection.appendChild(labels);
   }
+  function mysFunction(indexVal) {
+    //console.log(document.querySelector(".cld-number").innerHTML)
+
+
+      var person = prompt("Please enter event:", "User Id");
+      if (person == null || person == "") {
+
+      }
+      else if(already==true){
+        txt = " ";
+        addressP = document.querySelectorAll(".cld-number")[indexVal].innerHTML
+        addressP = addressP.replace(/\D/g,'') + "  ";
+      txt = person
+      console.log(addressP)
+              addressP += txt;
+              document.querySelectorAll("li p")[indexVal].innerHTML =addressP;
+      }
+      else {
+          txt = "  " + person ;
+          p++;
+        document.querySelectorAll("li p")[indexVal].innerHTML += txt;
+        already = true;
+      }
+            previous = txt;
+
+  }
+
   function AddDays(){
 
     // Create Number Element
@@ -211,14 +247,17 @@ function createCalendar(calendar, element, adjuster){
     for(var i = 0; i < calendar.Selected.Days; i++){
       var day = document.createElement('li');
       day.className += "cld-day currMonth";
-      day.setAttribute("onclick","mysFunction()")
-      //Disabled Days
+      day.setAttribute("onclick","pop()")
+            //Disabled Days
       var d = (i + calendar.Selected.FirstDay)%7;
       for(var q = 0; q < calendar.Options.DisabledDays.length; q++){
         if(d==calendar.Options.DisabledDays[q]){
           day.className += " disableDay";
         }
       }
+
+
+
 
       var number = DayNumber(i+1);
       // Check Date against Event Dates
@@ -286,6 +325,7 @@ function createCalendar(calendar, element, adjuster){
         if(d==calendar.Options.DisabledDays[q]){
           day.className += " disableDay";
         }
+
       }
 
       var number = DayNumber(i+1);
@@ -311,6 +351,24 @@ function createCalendar(calendar, element, adjuster){
   }
   AddLabels();
   AddDays();
+
+  var pop = (function(index){
+     indexWhereClicked = document.querySelector('.cld-days');
+  for (var i = 0, len = indexWhereClicked.children.length; i < len; i++)
+  {
+
+      (function(index){
+          indexWhereClicked.children[i].onclick = function(){
+              //  alert(index)  ;
+                indexVal = index;
+                console.log("from pop index wow!!!" + indexVal);// checking to see if it is in fact returning index and it does !!!
+                    mysFunction(indexVal);
+                return index;
+
+          }
+  })(i);
+  }
+  })(i);
 }
 
 function caleandar(el, data, settings){
@@ -347,13 +405,14 @@ while (i--) {
 */
 
 
-var indexVal = 0;
-var indexWhereClicked = document.querySelector('.cld-days');
+ //indexVal = 0;
+ indexWhereClicked = document.querySelector('.cld-days');
 
 /*
 The purpose of this immediately invoked function is to return the index of the spot on the calendar was indexWhereClicked
 each day is an index in the dom
 */
+/*
 for (var i = 0, len = indexWhereClicked.children.length; i < len; i++)
 {
 
@@ -367,9 +426,76 @@ for (var i = 0, len = indexWhereClicked.children.length; i < len; i++)
         }
     })(i);
 }
+*/
+/*
+var pop = (function(index){
+for (var i = 0, len = indexWhereClicked.children.length; i < len; i++)
+{
+
+    (function(index){
+        indexWhereClicked.children[i].onclick = function(){
+            //  alert(index)  ;
+              indexVal = index;
+              console.log("from pop index wow!!!" + indexVal);// checking to see if it is in fact returning index and it does !!!
+                  mysFunction(indexVal);
+              return index;
+
+        }
+})(i);
+}
+})(i);
+*/
 
 
 
+function mysFunction() {
+  //console.log(document.querySelector(".cld-number").innerHTML)
+pop(addressP);
+
+    var person = prompt("Please enter event:", "User Id");
+    if (person == null || person == "") {
+
+    }
+    else if(already==true){
+      pop;
+      txt = " ";
+      addressP = document.querySelectorAll(".cld-number")[indexVal].innerHTML
+      addressP = addressP.replace(/\D/g,'') + "  ";
+    txt = person
+    console.log("from variable addressp in side mysfunction " + addressP)
+            addressP += txt;
+            document.querySelectorAll("li p")[indexVal].innerHTML =addressP;
+    }
+    else {
+        txt = "  " + person ;
+        p++;
+    addressP=  document.querySelectorAll("li p")[indexVal].innerHTML += txt;
+    document.querySelectorAll("li p")[indexVal].innerHTML += txt;
+
+      already = true;
+    }
+          previous = txt;
+
+          //sessionStorage.setItem('autosave', addressP);
+          /*
+          for (var i = 0, len = indexWhereClicked.children.length; i < len; i++)
+          {
+
+              (function(index){
+                  indexWhereClicked.children[i].onclick = function(){
+                      //  alert(index)  ;
+                        indexVal = index;
+                        console.log(indexVal);// checking to see if it is in fact returning index and it does !!!
+
+                        mysFunction(indexVal);
+                  }
+              })(i);
+          }
+*/
+
+}
+
+/*
 
 var txt;
 var previous;
@@ -387,19 +513,21 @@ remove all of the characters that arent integers and append the new text
 
 slight bug if you change months and click a cell it doesnt work :/
 */
-
+/*
 function mysFunction(indexVal) {
   //console.log(document.querySelector(".cld-number").innerHTML)
+
 
     var person = prompt("Please enter event:", "User Id");
     if (person == null || person == "") {
 
-    } else if(already==true){
+    }
+    else if(already==true){
       txt = " ";
       addressP = document.querySelectorAll(".cld-number")[indexVal].innerHTML
       addressP = addressP.replace(/\D/g,'') + "  ";
     txt = person
-console.log(addressP)
+    console.log(addressP)
             addressP += txt;
             document.querySelectorAll("li p")[indexVal].innerHTML =addressP;
     }
@@ -412,3 +540,4 @@ console.log(addressP)
           previous = txt;
 
 }
+*/
